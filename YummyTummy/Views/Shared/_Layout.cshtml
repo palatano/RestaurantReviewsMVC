@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/bootstrap")
+
+
+    <link href="/Content/css?v=Hg3psSlBakAlaqEpsTBrvSVItRwhqP4AcwzSMd99TEM1" rel="stylesheet" />
+
+    <script src="/bundles/modernizr?v=wBEWDufH_8Md-Pbioxomt90vm6tJN2Pyy9u9zHtWsPo1"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+</head>
+<body>
+    @RenderSection("testSection", required: false);
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:cadetblue">
+        <div class="container" style="color:white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Restauranteview", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Restaurants", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

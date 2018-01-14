@@ -1,0 +1,18 @@
+﻿@model YummyTummy.Models.RestaurantAddress
+@{
+    ViewBag.Title = "Contact";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<address>
+    @Model.Street<br />
+    @Model.City, @Model.State @Model.Country, @Model.ZipCode<br />
+    
+    <abbr title="Phone">P:</abbr>
+    @Model.Phone
+</address>
+
+<address>
+    <strong>Support:</strong>   <a href=@Model.Email>@Model.Email</a><br />
+</address>

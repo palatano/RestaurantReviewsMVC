@@ -1,0 +1,42 @@
+﻿@model YummyTummy.Models.RestaurantReview
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RestaurantReview</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateRated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateRated)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
