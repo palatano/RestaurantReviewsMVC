@@ -17,6 +17,8 @@ namespace YummyTummy.Models
         [DataType(DataType.Date)]// calender
         public DateTime DateRated { get; set; } = DateTime.Now;
 
+        
+
 
     }
 }

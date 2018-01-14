@@ -15,9 +15,18 @@ namespace YummyTummy.Controllers
         private RestaurantDbContext db = new RestaurantDbContext();
 
         // GET: RestaurantReviews
-        public ActionResult Index()
+        public ActionResult Index(int restId)
         {
-            return View(db.Reviews.ToList());
+
+            Restaurant restaurant = db.Restaurants
+                .Include("Review")
+                .Where(res => res.RestaurantId == restId)
+                .FirstOrDefault();
+            if (restaurant == null)
+            {
+                return HttpNotFound();
+            }
+            return View(restaurant);
         }
 
         // GET: RestaurantReviews/Details/5
@@ -30,15 +39,20 @@ namespace YummyTummy.Controllers
             RestaurantReview restaurantReview = db.Reviews.Find(id);
             if (restaurantReview == null)
             {
-                return HttpNotFound();
+                return HttpNotFound(); 
             }
             return View(restaurantReview);
         }
 
         // GET: RestaurantReviews/Create
-        public ActionResult Create()
+        public ActionResult Create(int restId)
         {
-            return View();
+            RestaurantReview restaurantReview = new RestaurantReview
+            {
+                Restaurant_RestaurantId = restId
+            };
+            TempData["ID"] = restId;    
+            return View(restaurantReview);
         }
 
         // POST: RestaurantReviews/Create
@@ -48,11 +62,13 @@ namespace YummyTummy.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Rating,Comment,DateRated")] RestaurantReview restaurantReview)
         {
+            int restaurId = (int)TempData["ID"];
             if (ModelState.IsValid)
             {
+                restaurantReview.Restaurant_RestaurantId = restaurId;
                 db.Reviews.Add(restaurantReview);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { restId = restaurId });
             }
 
             return View(restaurantReview);

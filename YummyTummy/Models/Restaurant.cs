@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -37,10 +38,8 @@ namespace YummyTummy.Models
             }
         }
 
-        [NotMapped]
-        public static RestOrderEnum RestOrderEnum
-        {
-            get;
-        }
+        
+
+
     }
 }

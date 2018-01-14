@@ -1,5 +1,4 @@
-﻿@model IEnumerable<YummyTummy.Models.RestaurantReview>
-
+﻿@model YummyTummy.Models.Restaurant
 
 @{
     ViewBag.Title = "Index";
@@ -8,23 +7,23 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { restId = Model.RestaurantId})
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Rating)
+            @Html.DisplayName("Rating")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Comment)
+            @Html.DisplayName("Comment")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateRated)
+            @Html.DisplayName("Date Rated")
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Review) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Rating)

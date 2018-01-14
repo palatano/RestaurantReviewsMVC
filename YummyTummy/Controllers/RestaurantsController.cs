@@ -85,9 +85,9 @@ namespace YummyTummy.Controllers
         }
 
         // GET: RestaurantsReview
-        public ActionResult ReviewsRedir()
+        public ActionResult ReviewsRedir(int id)
         {
-            return RedirectToAction("Index", "RestaurantReviews");
+            return RedirectToAction("Index", "RestaurantReviews", new {restId = id});
         }
 
         
