@@ -18,6 +18,9 @@ namespace YummyTummy.Models
         public DateTime DateRated { get; set; } = DateTime.Now;
 
         
+        public int Restaurant_RestaurantId { get; set; }
+        [ForeignKey("Restaurant_RestaurantId")]
+        public Restaurant Restaurant { get; set; }
 
 
     }

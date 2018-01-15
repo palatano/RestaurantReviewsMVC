@@ -211,6 +211,10 @@
     <Compile Include="Migrations\201801121955192_willthiswork1.Designer.cs">
       <DependentUpon>201801121955192_willthiswork1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801142340253_fix-this-SHIZ.cs" />
+    <Compile Include="Migrations\201801142340253_fix-this-SHIZ.Designer.cs">
+      <DependentUpon>201801142340253_fix-this-SHIZ.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Util\AnalysisUtil.cs" />
@@ -333,6 +337,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801121955192_willthiswork1.resx">
       <DependentUpon>201801121955192_willthiswork1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801142340253_fix-this-SHIZ.resx">
+      <DependentUpon>201801142340253_fix-this-SHIZ.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

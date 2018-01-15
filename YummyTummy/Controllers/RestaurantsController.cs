@@ -25,12 +25,11 @@ namespace YummyTummy.Controllers
         }
 
         // GET: Restaurants
-        /*[HttpPost]
-        [ActionName("Index")]
+        [HttpPost]
         public ActionResult OrderBy(string orderResult)
         {
-            return View();
-        }*/
+            return View("Index");
+        }
 
         // POST: Restaurants
         [HttpPost] 

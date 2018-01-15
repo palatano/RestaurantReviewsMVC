@@ -16,14 +16,12 @@ namespace YummyTummy.Util
         /// based on their average rating.
         /// </summary>
         ///
-        public static ICollection<Restaurant> TopThreeRatedRestaurants
+        public static IEnumerable<Restaurant> TopThreeRatedRestaurants
         {
             get
             {
                 // We need a comparer to track the ratings, as well as the size.
-                var comparer = Comparer<Restaurant>.Create(
-                                    (r1, r2) => r1.AvgRating.CompareTo(r2.AvgRating));
-                SortedSet<Restaurant> avgRatingSet = new SortedSet<Restaurant>(comparer);
+                SortedSet<Restaurant> avgRatingSet = new SortedSet<Restaurant>();
                 int size = 0;
                 var restaurants = db.Restaurants.Include("RestaurantAddress").Include("Review");
                 foreach (var rest in restaurants)
@@ -39,7 +37,7 @@ namespace YummyTummy.Util
                     // we can keep the three highest ratings.
                     if (size >= 3)
                     {
-                        Restaurant restLowest = avgRatingSet.Last<Restaurant>();
+                        Restaurant restLowest = avgRatingSet.Min<Restaurant>();
                         decimal restLowestRating = decimal.Parse(restLowest.AvgRating);
                         if (avgRating >= restLowestRating)
                         {
@@ -51,9 +49,11 @@ namespace YummyTummy.Util
                     else
                     {
                         avgRatingSet.Add(rest);
+                        size++;
                     }
                 }
-                return avgRatingSet;
+                //var orderedSet = avgRatingSet.OrderBy(r => r.AvgRating);
+                return avgRatingSet.Reverse<Restaurant>();
             }
         }
     }

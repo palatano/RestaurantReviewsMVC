@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<YummyTummy.Models.Restaurant>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 <!-- Not sure if this is good practice, just trying to import
      an enum here.-->
 @using YummyTummy.Util
@@ -17,65 +19,67 @@
      as well as the search bar.-->
 <div class="filter-row row">
     <!-- Search Bar -->
-    <div class="right">
-        @using (Html.BeginForm("Index", "Restaurants", FormMethod.Post)) 
+    <div id="right">
+        @using (Html.BeginForm("Index", "Restaurants", FormMethod.Post))
         {
-        <div class="input-group stylish-input-group">
-            <input class="form-control pull-right" type="search" id="search"
-                   name="search" placeholder="Search by any field..." />
-            <span id="search-button-area" class="input-group-addon">
-                <button id="search-button" type="submit" value="search">
-                    <!-- This bug took me two hours to figure out... using i instead
-                of span works as the HTML tag -->
-                    <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
-                </button>
-            </span>
-        </div>
+            <div class="input-group stylish-input-group" >
+                <input class="form-control pull-right" type="search" id="search"
+                       name="search" placeholder="Search by any field..." />
+                <span id="search-button-area" class="input-group-addon">
+                    <button id="search-button" type="submit" value="search">
+                        <!-- This bug took me two hours to figure out... using i instead
+                        of span works as the HTML tag -->
+                        <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
+                    </button>
+                </span>
+            </div>
         }
     </div>
 
     <!-- After many hours, the EnumHelper class creates a select list out of an enum type,
     which will implicitly retrieve the display name attribute value.
     https://aspnetwebstack.codeplex.com/SourceControl/latest#src/System.Web.Mvc/Html/EnumHelper.cs -->
-    <div class="left">
+    
         @Html.DropDownList("orderResult",
-                                       EnumHelper.GetSelectList(typeof(RestOrderEnum)),
-                                       "Order Restaurants By",
-                                       new { @class = "form-control", @onchange = "/Restaurants/Index" })
-    </div>   
+                                            EnumHelper.GetSelectList(typeof(RestOrderEnum)),
+                                            "Order Restaurants By",
+                                            new { @class = "form-control dropdown", style = "margin-top:-3%; margin-bottom:2%; margin-left:1.5%", @onchange = "OrderBy" })
+    
 </div>
 
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <div class="panel panel-primary cardlike" style="min-height: 50ex;">
-                    <div class="panel-body">
-                        <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
-                        <hr />
-                        <h5>
-                            <strong>@Html.DisplayName("Address")</strong> : @Html.DisplayFor(modelItem => item.RestaurantAddress.FullAddress)
-                        </h5>
-                        <hr />
-                        <h5>
-                            <strong>@Html.DisplayName("Email")</strong> : @Html.DisplayFor(modelItem => item.RestaurantAddress.Email)
-                        </h5>
-                        <hr />
-                        <h5>
-                            <strong>@Html.DisplayName("Phone")</strong> : @Html.DisplayFor(modelItem => item.RestaurantAddress.Phone)
-                        </h5>
-                        <hr />
-                        <h5>
-                            <strong>@Html.DisplayName("Reviews")</strong> : @Html.DisplayFor(modelItem => item.AvgRating)
-                        </h5>
-                        <hr />
-                        @Html.ActionLink("Edit", "Edit", new { id = item.RestaurantId }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.RestaurantId }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.RestaurantId }) |
-                        @Html.ActionLink("Review", "ReviewsRedir", new { id = item.RestaurantId })
-                    </div>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="panel panel-primary cardlike" style="height: 54ex; max-height:54ex;">
+                <div class="panel-body">
+                    <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+                    <hr />
+                    <h5 style="height:5ex; vertical-align:middle;">
+                        <strong>@Html.DisplayName("Address")</strong> : @Html.DisplayFor(modelItem => item.RestaurantAddress.Street)
+                        <br />&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;
+                        @Html.DisplayFor(modelItem => item.RestaurantAddress.AddressWOStreet)
+                    </h5>
+                    <hr />
+                    <h5>
+                        <strong>@Html.DisplayName("Email")</strong> : @Html.DisplayFor(modelItem => item.RestaurantAddress.Email)
+                    </h5>
+                    <hr />
+                    <h5>
+                        <strong>@Html.DisplayName("Phone")</strong> : @Html.DisplayFor(modelItem => item.RestaurantAddress.Phone)
+                    </h5>
+                    <hr />
+                    <h5>
+                        <strong>@Html.DisplayName("Reviews")</strong> : @Html.DisplayFor(modelItem => item.AvgRating)
+                    </h5>
+                    <hr />
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RestaurantId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.RestaurantId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.RestaurantId }) |
+                    @Html.ActionLink("Review", "ReviewsRedir", new { id = item.RestaurantId })
                 </div>
             </div>
-        }
+        </div>
+    }
 
-    </div>
+</div>

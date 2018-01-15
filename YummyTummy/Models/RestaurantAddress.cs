@@ -45,11 +45,11 @@ namespace YummyTummy.Models
         public string Email { get; set; }
 
         [NotMapped]
-        public string FullAddress
+        public string AddressWOStreet
         {
             get
             {
-                return String.Format("{0}, {1}, {2} {3}, {4}", Street, City, State, ZipCode, Country);
+                return String.Format("{0}, {1} {2}, {3}",  City, State, ZipCode, Country);
             }
         }
     }

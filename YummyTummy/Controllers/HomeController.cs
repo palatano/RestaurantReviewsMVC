@@ -24,26 +24,26 @@ namespace YummyTummy.Controllers
         //    return "Hello World";
         // }
 
-        public ContentResult About()
+        public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "This restaurant site is purely made for demonstration purposes.";
 
-            return Content("This Application gives restuarants with best reviews");
+            return View();
         }
       
 
         public ViewResult Contact()
         {
-            ViewBag.Message = "Contact Whole Foods";
+            ViewBag.Message = "Contact Restauranteview At: ";
             RestaurantAddress restaurantAddress = new RestaurantAddress()
             {
                 City = "Reston",
                 Country = "US",
-                ZipCode = "10594",
+                ZipCode = "20190",
                 Email = "reston@va.org",
                 Phone = "92391082309",
                 State = "VA",
-                Street = "Market St"
+                Street = "11730 Plaza America Dr #205"
             };
             return View("Contact", restaurantAddress);
         }

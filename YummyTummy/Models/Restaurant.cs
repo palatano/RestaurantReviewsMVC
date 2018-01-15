@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +11,7 @@ using YummyTummy.Util;
 
 namespace YummyTummy.Models
 {
-    public class Restaurant
+    public class Restaurant : IComparable
     {
 
         [Key]
@@ -37,9 +38,31 @@ namespace YummyTummy.Models
                 return numRatings == 0 ? "N/A" : Convert.ToString(result / numRatings);
             }
         }
-
         
 
+        public int CompareTo(object obj)
+        {
+            // Check if they are of the type, Restaurant.
+            if (!(obj is Restaurant))
+            {
+                return -4;
+            }
 
+            Restaurant r1 = this;
+            Restaurant r2 = (Restaurant) obj;
+            // Next, check if null.
+            if (r2 == null)
+            {
+                return -3;
+            }
+
+            // Lastly, check if either of them have a N/A rating.
+            if (!decimal.TryParse(r1.AvgRating, out decimal rate1) ||
+                !decimal.TryParse(r2.AvgRating, out decimal rate2))
+            {
+                return -2;
+            }
+            return decimal.Compare(rate1, rate2);
+        }
     }
 }
