@@ -17,7 +17,7 @@ namespace YummyTummy.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RestaurantId { get; set; }
-        [DisplayName("Restaurant Name")]
+        [Required, DisplayName("Restaurant Name"), MaxLength(25, ErrorMessage = "Up to 25 characters allowed")]
         public string Name { get; set; }
         
         public RestaurantAddress RestaurantAddress { get; set; }

@@ -3,7 +3,7 @@ namespace YummyTummy.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class willthiswork : DbMigration
+    public partial class thisfinthingdeletedmyfile4 : DbMigration
     {
         public override void Up()
         {
@@ -12,13 +12,13 @@ namespace YummyTummy.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Street = c.String(),
-                        City = c.String(),
-                        State = c.String(maxLength: 10),
-                        Country = c.String(maxLength: 15),
-                        ZipCode = c.String(nullable: false),
-                        Phone = c.String(maxLength: 15),
-                        Email = c.String(),
+                        Street = c.String(nullable: false, maxLength: 25),
+                        City = c.String(nullable: false, maxLength: 25),
+                        State = c.String(nullable: false, maxLength: 10),
+                        Country = c.String(nullable: false, maxLength: 5),
+                        ZipCode = c.String(nullable: false, maxLength: 5),
+                        Phone = c.String(nullable: false, maxLength: 15),
+                        Email = c.String(nullable: false, maxLength: 15),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -27,7 +27,7 @@ namespace YummyTummy.Migrations
                 c => new
                     {
                         RestaurantId = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
+                        Name = c.String(nullable: false),
                         RestaurantAddress_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.RestaurantId)
@@ -40,13 +40,13 @@ namespace YummyTummy.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Rating = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Comment = c.String(),
+                        Comment = c.String(nullable: false),
                         DateRated = c.DateTime(nullable: false),
-                        RestaurantId = c.Int(nullable: false),
+                        Restaurant_RestaurantId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Restaurants", t => t.RestaurantId, cascadeDelete: true)
-                .Index(t => t.RestaurantId);
+                .ForeignKey("dbo.Restaurants", t => t.Restaurant_RestaurantId, cascadeDelete: true)
+                .Index(t => t.Restaurant_RestaurantId);
             
             CreateTable(
                 "dbo.TestHelpers",
@@ -71,9 +71,9 @@ namespace YummyTummy.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.RestaurantReviews", "RestaurantId", "dbo.Restaurants");
+            DropForeignKey("dbo.RestaurantReviews", "Restaurant_RestaurantId", "dbo.Restaurants");
             DropForeignKey("dbo.Restaurants", "RestaurantAddress_Id", "dbo.RestaurantAddresses");
-            DropIndex("dbo.RestaurantReviews", new[] { "RestaurantId" });
+            DropIndex("dbo.RestaurantReviews", new[] { "Restaurant_RestaurantId" });
             DropIndex("dbo.Restaurants", new[] { "RestaurantAddress_Id" });
             DropTable("dbo.TestHelpers");
             DropTable("dbo.RestaurantReviews");

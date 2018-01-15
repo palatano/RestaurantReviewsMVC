@@ -11,13 +11,16 @@ namespace YummyTummy.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Required, Range(0.0, 10.0, ErrorMessage ="Enter a rating between 0 and 10.")]
         public decimal Rating { get; set; }
-        [DataType(DataType.MultilineText)]// text Area
+        [Required, DataType(DataType.MultilineText)]// text Area
         public string Comment { get; set; }
-        [DataType(DataType.Date)]// calender
+        [Required, DataType(DataType.Date)]// calender
         public DateTime DateRated { get; set; } = DateTime.Now;
 
-        
+        [Required, MaxLength(25, ErrorMessage = "Up to a name of 25 characters allowed.")]
+        public string ReviewerName { get; set; }
+
         public int Restaurant_RestaurantId { get; set; }
         [ForeignKey("Restaurant_RestaurantId")]
         public Restaurant Restaurant { get; set; }

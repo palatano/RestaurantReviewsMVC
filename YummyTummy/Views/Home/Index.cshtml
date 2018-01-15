@@ -1,4 +1,4 @@
-﻿@using YummyTummy.Util;
+﻿@model IEnumerable<YummyTummy.Models.Restaurant>
 
 @{
     ViewBag.Title = "Home Page";
@@ -35,7 +35,7 @@
 
     <div class="row">
         @{int restIndex = 1;}
-        @foreach (var rest in AnalysisUtil.TopThreeRatedRestaurants)
+        @foreach (var rest in @Model)
         {
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="panel panel-primary cardlike" style="min-height: 15ex;">

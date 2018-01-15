@@ -7,13 +7,13 @@ namespace YummyTummy.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class willthiswork1 : IMigrationMetadata
+    public sealed partial class thisfinthingdeletedmyfile6 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(willthiswork1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(thisfinthingdeletedmyfile6));
         
         string IMigrationMetadata.Id
         {
-            get { return "201801121955192_willthiswork1"; }
+            get { return "201801151837114_this-f-in-thing-deleted-my-file6"; }
         }
         
         string IMigrationMetadata.Source

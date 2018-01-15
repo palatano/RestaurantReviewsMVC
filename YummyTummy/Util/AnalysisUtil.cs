@@ -8,18 +8,14 @@ namespace YummyTummy.Util
 {
     public static class AnalysisUtil
     {
-        // TODO: Should I have a static field for utilities?
-        private static RestaurantDbContext db = new RestaurantDbContext();
         ///
         /// <summary>
         /// Used as a property for the index view, to find the top three rated restaurants
         /// based on their average rating.
         /// </summary>
         ///
-        public static IEnumerable<Restaurant> TopThreeRatedRestaurants
+        public static IEnumerable<Restaurant> TopThreeRatedRestaurants(RestaurantDbContext db)
         {
-            get
-            {
                 // We need a comparer to track the ratings, as well as the size.
                 SortedSet<Restaurant> avgRatingSet = new SortedSet<Restaurant>();
                 int size = 0;
@@ -54,7 +50,7 @@ namespace YummyTummy.Util
                 }
                 //var orderedSet = avgRatingSet.OrderBy(r => r.AvgRating);
                 return avgRatingSet.Reverse<Restaurant>();
-            }
+            
         }
     }
 }

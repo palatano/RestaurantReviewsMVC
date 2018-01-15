@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using YummyTummy.Models;
@@ -27,6 +28,38 @@ namespace YummyTummy.Controllers
                 return HttpNotFound();
             }
             return View(restaurant);
+        }
+
+        // POST: Restaurants
+        [HttpPost]
+        public ActionResult Index(string search)
+        {
+            // Treat query search as case insensitive.
+            search = search.ToLower();
+
+            // From our database, we need to get the restaurants and their 
+            // addresses and reviews (which are child tables).
+            var reviews = db.Reviews;
+
+            // By using reflection, we can simply get the properties for each restaurant.
+            IList<RestaurantReview> filteredList = new List<RestaurantReview>();
+            foreach (var field in reviews)
+            {
+                var props = field.GetType().GetProperties();
+                foreach (PropertyInfo prop in props)
+                {
+                    var propVal = prop.GetValue(field);
+                    // Otherwise, check the restauranat's property and it's value if 
+                    // the search query is inside one of the values as a string.
+                    string propValStr = Convert.ToString(propVal).ToLower();
+                    if (propValStr.Contains(search) && !filteredList.Contains(field))
+                    {
+                        filteredList.Add(field);
+                    }
+                }
+            }
+            ViewData["reviews"] = filteredList;
+            return View(filteredList);
         }
 
         // GET: RestaurantReviews/Details/5
@@ -60,7 +93,7 @@ namespace YummyTummy.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Rating,Comment,DateRated")] RestaurantReview restaurantReview)
+        public ActionResult Create([Bind(Include = "Id,ReviewerName, Rating,Comment,DateRated, Restaurant_RestaurantId")] RestaurantReview restaurantReview)
         {
             int restaurId = (int)TempData["ID"];
             if (ModelState.IsValid)
@@ -72,6 +105,46 @@ namespace YummyTummy.Controllers
             }
 
             return View(restaurantReview);
+        }
+
+        // GET: Restaurants/OrderBy
+        [ActionName("OrderBy")]
+        public ActionResult OrderBy(string orderResult, int restId)
+        {
+            // We want to find the right way to order our restaurants, so
+            // we can use L2E to get all the results with the ORDER BY clause.
+            var restaurant = db.Restaurants
+                .Include("RestaurantAddress")
+                .Include("Review")
+                .First(rest => rest.RestaurantId == restId);
+            IOrderedEnumerable<RestaurantReview> resultSet = null;
+            if (orderResult == "Date Ascending")
+            {
+                resultSet = from rev in restaurant.Review
+                            orderby rev.DateRated
+                            select rev;
+            }
+            else if (orderResult == "Date Descending")
+            {
+                resultSet = from rev in restaurant.Review
+                            orderby rev.DateRated descending
+                            select rev;
+            }
+            else if (orderResult == "Rating Ascending")
+            {
+                resultSet = restaurant.Review.Select(rev => rev).OrderBy(rev => rev.Rating);
+            }
+            else if (orderResult == "Rating Descending")
+            {
+                resultSet = restaurant.Review.Select(rev => rev).OrderByDescending(rev => rev.Rating);
+            }
+            else
+            {
+                
+                return View("Index", restaurant);
+            }
+            ViewData["reviews"] = resultSet;
+            return View("Index", restaurant);
         }
 
         // GET: RestaurantReviews/Edit/5
@@ -94,13 +167,13 @@ namespace YummyTummy.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Rating,Comment,DateRated")] RestaurantReview restaurantReview)
+        public ActionResult Edit([Bind(Include = "Id,ReviewerName, Rating,Comment,DateRated, Restaurant_RestaurantId ")] RestaurantReview restaurantReview)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(restaurantReview).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { restId = restaurantReview.Restaurant_RestaurantId });
             }
             return View(restaurantReview);
         }
@@ -128,7 +201,7 @@ namespace YummyTummy.Controllers
             RestaurantReview restaurantReview = db.Reviews.Find(id);
             db.Reviews.Remove(restaurantReview);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { restId = restaurantReview.Restaurant_RestaurantId });
         }
 
         protected override void Dispose(bool disposing)

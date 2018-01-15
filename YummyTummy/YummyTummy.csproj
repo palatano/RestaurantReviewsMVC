@@ -203,20 +203,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801121933185_willthiswork.cs" />
-    <Compile Include="Migrations\201801121933185_willthiswork.Designer.cs">
-      <DependentUpon>201801121933185_willthiswork.cs</DependentUpon>
+    <Compile Include="Migrations\201801151813566_this-f-in-thing-deleted-my-file4.cs" />
+    <Compile Include="Migrations\201801151813566_this-f-in-thing-deleted-my-file4.Designer.cs">
+      <DependentUpon>201801151813566_this-f-in-thing-deleted-my-file4.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801121955192_willthiswork1.cs" />
-    <Compile Include="Migrations\201801121955192_willthiswork1.Designer.cs">
-      <DependentUpon>201801121955192_willthiswork1.cs</DependentUpon>
+    <Compile Include="Migrations\201801151817212_this-f-in-thing-deleted-my-file5.cs" />
+    <Compile Include="Migrations\201801151817212_this-f-in-thing-deleted-my-file5.Designer.cs">
+      <DependentUpon>201801151817212_this-f-in-thing-deleted-my-file5.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801142340253_fix-this-SHIZ.cs" />
-    <Compile Include="Migrations\201801142340253_fix-this-SHIZ.Designer.cs">
-      <DependentUpon>201801142340253_fix-this-SHIZ.cs</DependentUpon>
+    <Compile Include="Migrations\201801151837114_this-f-in-thing-deleted-my-file6.cs" />
+    <Compile Include="Migrations\201801151837114_this-f-in-thing-deleted-my-file6.Designer.cs">
+      <DependentUpon>201801151837114_this-f-in-thing-deleted-my-file6.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\RestaurantReview.cs" />
     <Compile Include="Util\AnalysisUtil.cs" />
     <Compile Include="Util\RestOrderEnum.cs" />
     <Compile Include="Models\RestaurantAddress.cs" />
@@ -224,11 +225,11 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Restaurant.cs" />
     <Compile Include="Models\RestaurantDbContext.cs" />
-    <Compile Include="Models\RestaurantReview.cs" />
     <Compile Include="Models\ResturantDb.cs" />
     <Compile Include="Models\TestHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Util\ReviewOrderEnum.cs" />
     <Compile Include="Util\StringValueAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -332,14 +333,14 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201801121933185_willthiswork.resx">
-      <DependentUpon>201801121933185_willthiswork.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801151813566_this-f-in-thing-deleted-my-file4.resx">
+      <DependentUpon>201801151813566_this-f-in-thing-deleted-my-file4.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801121955192_willthiswork1.resx">
-      <DependentUpon>201801121955192_willthiswork1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801151817212_this-f-in-thing-deleted-my-file5.resx">
+      <DependentUpon>201801151817212_this-f-in-thing-deleted-my-file5.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801142340253_fix-this-SHIZ.resx">
-      <DependentUpon>201801142340253_fix-this-SHIZ.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801151837114_this-f-in-thing-deleted-my-file6.resx">
+      <DependentUpon>201801151837114_this-f-in-thing-deleted-my-file6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

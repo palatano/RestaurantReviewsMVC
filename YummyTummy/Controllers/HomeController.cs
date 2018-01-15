@@ -4,25 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using YummyTummy.Models;
+using YummyTummy.Util;
 
 namespace YummyTummy.Controllers
 {
 
     public class HomeController : Controller
     {
-        
-        
+        private RestaurantDbContext db = new RestaurantDbContext();
+
         public ActionResult Index()//Action Methods
         {
-            ViewBag.Name = "Chik-fil-e";// C# 4.0
-            ViewData["Location"] = "Reston VA";
-            TempData["Country"] = "USA";
-            return View();
+            var rests = AnalysisUtil.TopThreeRatedRestaurants(db);
+            return View(rests);
         }
-        //public string Index()
-        //{
-        //    return "Hello World";
-        // }
 
         public ActionResult About()
         {

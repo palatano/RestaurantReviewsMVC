@@ -123,7 +123,10 @@ namespace YummyTummy.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Restaurant restaurant = db.Restaurants.Find(id);
+            Restaurant restaurant = db.Restaurants
+                .Include("RestaurantAddress")
+                .Include("Review")
+                .Single(rest => rest.RestaurantId == id);
             if (restaurant == null)
             {
                 return HttpNotFound();
@@ -165,7 +168,10 @@ namespace YummyTummy.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Restaurant restaurant = db.Restaurants.Find(id);
+            Restaurant restaurant = db.Restaurants
+                .Include("RestaurantAddress")
+                .Include("Review")
+                .Single(rest => rest.RestaurantId == id);
             if (restaurant == null)
             {
                 return HttpNotFound();
@@ -179,11 +185,13 @@ namespace YummyTummy.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RestaurantId,Name")] Restaurant restaurant)
+        public ActionResult Edit([Bind(Include = "RestaurantId,Name, RestaurantAddress")] Restaurant restaurant)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(restaurant).State = EntityState.Modified;
+                db.SaveChanges();
+                db.Entry(restaurant.RestaurantAddress).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
