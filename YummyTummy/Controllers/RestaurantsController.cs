@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using YummyTummy.Models;
 using YummyTummy.ActionFilters;
 using System.Reflection;
+using System.Data.Entity.SqlServer;
 
 namespace YummyTummy.Controllers
 {
@@ -24,11 +25,34 @@ namespace YummyTummy.Controllers
             return View(restaurants.Include("RestaurantAddress").Include("Review").ToList());
         }
 
-        // GET: Restaurants
-        [HttpPost]
+        // GET: Restaurants/OrderBy
+        [ActionName("OrderBy")]
         public ActionResult OrderBy(string orderResult)
         {
-            return View("Index");
+            // We want to find the right way to order our restaurants, so
+            // we can use L2E to get all the results with the ORDER BY clause.
+            var restaurants = db.Restaurants.Include("RestaurantAddress").Include("Review");
+            IQueryable<Restaurant> resultSet = null;
+            if (orderResult == "Name Ascending") {
+                resultSet = from rest in restaurants
+                            orderby rest.Name
+                            select rest;
+            } else if (orderResult == "Name Descending")
+            {
+                resultSet = from rest in restaurants
+                            orderby rest.Name descending
+                            select rest;
+            } else if (orderResult == "Average Rating Ascending")
+            {
+                resultSet = restaurants.Select(rest => rest).OrderBy(rest => rest.Review.Average(rev => rev.Rating));
+            } else if (orderResult == "Average Rating Descending")
+            {
+                resultSet = restaurants.Select(rest => rest).OrderByDescending(rest => rest.Review.Average(rev => rev.Rating));
+            } else
+            {
+                return View("Index", restaurants);
+            }
+            return View("Index", resultSet);
         }
 
         // POST: Restaurants
