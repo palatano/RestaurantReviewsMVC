@@ -17,7 +17,8 @@
 <div class="filter-row row">
     <!-- Search Bar -->
     <div id="right">
-        @using (Html.BeginForm("Index", "Restaurants", FormMethod.Post))
+
+        @using (Html.BeginForm("Index", "RestaurantReviews", routeValues: new { restId = Model.RestaurantId }, method : FormMethod.Post))
         {
             <div class="input-group stylish-input-group">
                 <input class="form-control pull-right" type="search" id="search"
@@ -68,7 +69,7 @@
     </tr>
 
     @{
-        IEnumerable<YummyTummy.Models.RestaurantReview> reviews = (IOrderedEnumerable<YummyTummy.Models.RestaurantReview>) ViewData["Reviews"];
+        IEnumerable<YummyTummy.Models.RestaurantReview> reviews = (IEnumerable<YummyTummy.Models.RestaurantReview>) ViewData["Reviews"];
         if (reviews == null)
         {
             reviews = Model.Review;

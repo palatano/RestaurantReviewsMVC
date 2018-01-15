@@ -32,14 +32,14 @@ namespace YummyTummy.Controllers
 
         // POST: Restaurants
         [HttpPost]
-        public ActionResult Index(string search)
+        public ActionResult Index(string search, int restId)
         {
             // Treat query search as case insensitive.
             search = search.ToLower();
 
             // From our database, we need to get the restaurants and their 
             // addresses and reviews (which are child tables).
-            var reviews = db.Reviews;
+            var reviews = db.Reviews.Where(rev => rev.Restaurant_RestaurantId == restId);
 
             // By using reflection, we can simply get the properties for each restaurant.
             IList<RestaurantReview> filteredList = new List<RestaurantReview>();
@@ -59,7 +59,8 @@ namespace YummyTummy.Controllers
                 }
             }
             ViewData["reviews"] = filteredList;
-            return View(filteredList);
+            Restaurant rest = db.Restaurants.Find(restId);
+            return View(rest);
         }
 
         // GET: RestaurantReviews/Details/5
