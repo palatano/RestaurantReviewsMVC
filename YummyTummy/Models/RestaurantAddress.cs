@@ -21,12 +21,14 @@ namespace YummyTummy.Models
         public string Country { get; set; }
         [Required, DataType(DataType.PostalCode),
             MaxLength(5, ErrorMessage = "Up to 5 characters allowed for zipcode."),
-            DisplayFormat(DataFormatString = @"d{5}")]
+            RegularExpression(@"\d{5}", ErrorMessage = "5 digit zipcode only.")]
         public string ZipCode { get; set; }
-        [Required, Column("Phone"), StringLength(15, ErrorMessage = "Up to 15 characters allowed.")]
-        [DataType(DataType.PhoneNumber)]
+        [Required, Column("Phone"), StringLength(25, ErrorMessage = "Up to 15 characters allowed.")]
+        [DataType(DataType.PhoneNumber),
+         RegularExpression(@"^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$", ErrorMessage = "Invalid Phone Number.")]
         public string Phone { get; set; }
-        [Required, DataType(DataType.EmailAddress), MaxLength(15, ErrorMessage = "Up to 15 characters allowed.")]
+        [Required, DataType(DataType.EmailAddress), MaxLength(30, ErrorMessage = "Up to 15 characters allowed.")]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$", ErrorMessage = "Invalid Email Format.")]
         public string Email { get; set; }
 
         [NotMapped]

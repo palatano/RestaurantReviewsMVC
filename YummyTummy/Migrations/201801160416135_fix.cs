@@ -3,7 +3,7 @@ namespace YummyTummy.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class thisfinthingdeletedmyfile4 : DbMigration
+    public partial class fix : DbMigration
     {
         public override void Up()
         {
@@ -17,8 +17,8 @@ namespace YummyTummy.Migrations
                         State = c.String(nullable: false, maxLength: 10),
                         Country = c.String(nullable: false, maxLength: 5),
                         ZipCode = c.String(nullable: false, maxLength: 5),
-                        Phone = c.String(nullable: false, maxLength: 15),
-                        Email = c.String(nullable: false, maxLength: 15),
+                        Phone = c.String(nullable: false, maxLength: 25),
+                        Email = c.String(nullable: false, maxLength: 30),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -27,7 +27,7 @@ namespace YummyTummy.Migrations
                 c => new
                     {
                         RestaurantId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 25),
                         RestaurantAddress_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.RestaurantId)
@@ -40,9 +40,11 @@ namespace YummyTummy.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Rating = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Comment = c.String(nullable: false),
+                        Comment = c.String(nullable: false, maxLength: 1024),
                         DateRated = c.DateTime(nullable: false),
+                        ReviewerName = c.String(nullable: false, maxLength: 25),
                         Restaurant_RestaurantId = c.Int(nullable: false),
+                        ReviewerId = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Restaurants", t => t.Restaurant_RestaurantId, cascadeDelete: true)

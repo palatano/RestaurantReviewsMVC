@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace YummyTummy.Models
 {
@@ -79,6 +80,16 @@ namespace YummyTummy.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+
+        [Required, Display(Name ="Full Name")]
+        [StringLength(100, ErrorMessage = "Name can only contain a max length of 100 characters.")]
+        public string FullName { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "Name can only contain a max length of 100 characters.")]
+        public string Name { get; set; }
+        
     }
 
     public class ResetPasswordViewModel

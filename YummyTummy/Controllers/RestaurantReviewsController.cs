@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -18,7 +19,6 @@ namespace YummyTummy.Controllers
         // GET: RestaurantReviews
         public ActionResult Index(int restId)
         {
-
             Restaurant restaurant = db.Restaurants
                 .Include("Review")
                 .Where(res => res.RestaurantId == restId)
@@ -79,24 +79,30 @@ namespace YummyTummy.Controllers
         }
 
         // GET: RestaurantReviews/Create
+        [Authorize]
         public ActionResult Create(int restId)
         {
             RestaurantReview restaurantReview = new RestaurantReview
             {
-                Restaurant_RestaurantId = restId
-            };
-            TempData["ID"] = restId;    
+                Restaurant_RestaurantId = restId,
+                ReviewerId = User.Identity.GetUserId(),
+                ReviewerName = User.Identity.GetFullName()
+                
+        };
+            TempData["ID"] = restId;
             return View(restaurantReview);
         }
 
         // POST: RestaurantReviews/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ReviewerName, Rating,Comment,DateRated, Restaurant_RestaurantId")] RestaurantReview restaurantReview)
+        public ActionResult Create([Bind(Include = "Id,ReviewerName, Rating,Comment,DateRated, Restaurant_RestaurantId, ReviewerId")] RestaurantReview restaurantReview)
         {
             int restaurId = (int)TempData["ID"];
+
             if (ModelState.IsValid)
             {
                 restaurantReview.Restaurant_RestaurantId = restaurId;
@@ -149,6 +155,7 @@ namespace YummyTummy.Controllers
         }
 
         // GET: RestaurantReviews/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -168,7 +175,8 @@ namespace YummyTummy.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ReviewerName, Rating,Comment,DateRated, Restaurant_RestaurantId ")] RestaurantReview restaurantReview)
+        [Authorize]
+        public ActionResult Edit([Bind(Include = "Id,ReviewerName, Rating,Comment,DateRated, Restaurant_RestaurantId, ReviewerId ")] RestaurantReview restaurantReview)
         {
             if (ModelState.IsValid)
             {
@@ -180,6 +188,7 @@ namespace YummyTummy.Controllers
         }
 
         // GET: RestaurantReviews/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<YummyTummy.Models.MyReviewsViewModel>
+@using Microsoft.AspNet.Identity
+@using YummyTummy.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Reviews for @User.Identity.GetFullName()</h2>
+<hr />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="panel panel-primary cardlike" style="height: 54ex; max-height:54ex;">
+                <div class="panel-body">
+                    <h3>@Html.DisplayFor(model => item.Restaurant.Name)</h3>
+
+                    <hr />
+                    <h5>
+                        <strong>@Html.DisplayName("Rating")</strong> : @Html.DisplayFor(modelItem => item.RestaurantReview.Rating)
+                    </h5>
+                    <hr />
+                    <h5>
+                        <strong>@Html.DisplayName("Comment")</strong> : @Html.DisplayFor(modelItem => item.RestaurantReview.Comment)
+                    </h5>
+                    <hr />
+                    <h5>
+                        <strong>@Html.DisplayName("Date of Review")</strong> : @Html.DisplayFor(modelItem => item.RestaurantReview.DateRated)
+                    </h5>
+                    <hr />
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RestaurantReview.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.RestaurantReview.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.RestaurantReview.Id }) 
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+

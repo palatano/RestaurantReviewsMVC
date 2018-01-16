@@ -1,0 +1,60 @@
+﻿@model YummyTummy.Models.MyReviewsViewModel
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<div>
+    <h4>RestaurantReview</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Restaurant.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Restaurant.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RestaurantReview.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RestaurantReview.Rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RestaurantReview.Comment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RestaurantReview.Comment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RestaurantReview.DateRated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RestaurantReview.DateRated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RestaurantReview.ReviewerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RestaurantReview.ReviewerName)
+        </dd>
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RestaurantReview.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

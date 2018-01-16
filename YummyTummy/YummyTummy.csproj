@@ -189,6 +189,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\AuthLogAttribute.cs" />
     <Compile Include="ActionFilters\LogAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -198,25 +199,20 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MyReviewsController.cs" />
     <Compile Include="Controllers\RestaurantReviewsController.cs" />
     <Compile Include="Controllers\RestaurantsController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801151813566_this-f-in-thing-deleted-my-file4.cs" />
-    <Compile Include="Migrations\201801151813566_this-f-in-thing-deleted-my-file4.Designer.cs">
-      <DependentUpon>201801151813566_this-f-in-thing-deleted-my-file4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801151817212_this-f-in-thing-deleted-my-file5.cs" />
-    <Compile Include="Migrations\201801151817212_this-f-in-thing-deleted-my-file5.Designer.cs">
-      <DependentUpon>201801151817212_this-f-in-thing-deleted-my-file5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801151837114_this-f-in-thing-deleted-my-file6.cs" />
-    <Compile Include="Migrations\201801151837114_this-f-in-thing-deleted-my-file6.Designer.cs">
-      <DependentUpon>201801151837114_this-f-in-thing-deleted-my-file6.cs</DependentUpon>
+    <Compile Include="Migrations\201801160416135_fix.cs" />
+    <Compile Include="Migrations\201801160416135_fix.Designer.cs">
+      <DependentUpon>201801160416135_fix.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\MyReviewsViewModel.cs" />
     <Compile Include="Models\RestaurantReview.cs" />
     <Compile Include="Util\AnalysisUtil.cs" />
     <Compile Include="Util\RestOrderEnum.cs" />
@@ -315,6 +311,12 @@
     <Content Include="Views\RestaurantReviews\Edit.cshtml" />
     <Content Include="Views\RestaurantReviews\Index.cshtml" />
     <Content Include="Views\Shared\_TestPartial.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Role\Create.cshtml" />
+    <Content Include="Views\MyReviews\Index.cshtml" />
+    <Content Include="Views\MyReviews\Edit.cshtml" />
+    <Content Include="Views\MyReviews\Details.cshtml" />
+    <Content Include="Views\MyReviews\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -333,14 +335,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201801151813566_this-f-in-thing-deleted-my-file4.resx">
-      <DependentUpon>201801151813566_this-f-in-thing-deleted-my-file4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801151817212_this-f-in-thing-deleted-my-file5.resx">
-      <DependentUpon>201801151817212_this-f-in-thing-deleted-my-file5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801151837114_this-f-in-thing-deleted-my-file6.resx">
-      <DependentUpon>201801151837114_this-f-in-thing-deleted-my-file6.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801160416135_fix.resx">
+      <DependentUpon>201801160416135_fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

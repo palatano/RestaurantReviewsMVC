@@ -13,7 +13,7 @@ namespace YummyTummy.Models
         public int Id { get; set; }
         [Required, Range(0.0, 10.0, ErrorMessage ="Enter a rating between 0 and 10.")]
         public decimal Rating { get; set; }
-        [Required, DataType(DataType.MultilineText)]// text Area
+        [Required, DataType(DataType.MultilineText), MaxLength(1024, ErrorMessage = "Up to 1024 characters allowed.")]// text Area
         public string Comment { get; set; }
         [Required, DataType(DataType.Date)]// calender
         public DateTime DateRated { get; set; } = DateTime.Now;
@@ -24,6 +24,8 @@ namespace YummyTummy.Models
         public int Restaurant_RestaurantId { get; set; }
         [ForeignKey("Restaurant_RestaurantId")]
         public Restaurant Restaurant { get; set; }
+
+        public string ReviewerId { get; set; }
 
 
     }
