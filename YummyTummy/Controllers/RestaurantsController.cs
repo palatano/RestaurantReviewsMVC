@@ -206,7 +206,10 @@ namespace YummyTummy.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Restaurant restaurant = db.Restaurants.Find(id);
+            Restaurant restaurant = db.Restaurants
+                .Include("RestaurantAddress")
+                .Include("Review")
+                .Single(rest => rest.RestaurantId == id);
             if (restaurant == null)
             {
                 return HttpNotFound();

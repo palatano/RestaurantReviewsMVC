@@ -11,6 +11,17 @@
     <h4>Restaurant</h4>
     <hr />
     <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+
         <dt>
             @Html.DisplayNameFor(model => model.RestaurantAddress.Street)
         </dt>
@@ -20,11 +31,51 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.RestaurantAddress.City)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.RestaurantAddress.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RestaurantAddress.State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RestaurantAddress.State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RestaurantAddress.ZipCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RestaurantAddress.ZipCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RestaurantAddress.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RestaurantAddress.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RestaurantAddress.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RestaurantAddress.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RestaurantAddress.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RestaurantAddress.Email)
         </dd>
 
     </dl>

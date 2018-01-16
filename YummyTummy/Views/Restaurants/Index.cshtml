@@ -11,9 +11,11 @@
 
 <h2>Restaurants</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.IsInRole("Admin")) { 
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
 <hr />
 
 <!-- This row element will contain the drop-down list for ordering of restaurants,
@@ -73,13 +75,24 @@
                     </h5>
                     <hr />
                     <h5>
-                        <strong>@Html.DisplayName("Reviews")</strong> : @Html.DisplayFor(modelItem => item.AvgRating)
+                        <strong>@Html.DisplayName("Average Rating: ")</strong> : @Html.DisplayFor(modelItem => item.AvgRating)
                     </h5>
                     <hr />
-                    @Html.ActionLink("Edit", "Edit", new { id = item.RestaurantId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.RestaurantId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.RestaurantId }) |
-                    @Html.ActionLink("Review", "ReviewsRedir", new { id = item.RestaurantId })
+                
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Edit |", "Edit", new { id = item.RestaurantId });
+                        @Html.ActionLink(" Details |", "Details", new { id = item.RestaurantId });
+                        @Html.ActionLink(" Delete |", "Delete", new { id = item.RestaurantId });
+                        @Html.ActionLink(" Reviews", "ReviewsRedir", new { id = item.RestaurantId });
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Reviews", "ReviewsRedir", new { id = item.RestaurantId });
+                    }
+                
+                    
+
                 </div>
             </div>
         </div>
