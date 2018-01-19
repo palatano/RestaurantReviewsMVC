@@ -11,7 +11,8 @@
 
 <h2>Restaurants</h2>
 
-@if (User.IsInRole("Admin")) { 
+@if (User.IsInRole("Admin"))
+{
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
@@ -25,11 +26,11 @@
     <div id="right">
         @using (Html.BeginForm("Index", "Restaurants", FormMethod.Post))
         {
-            <div class="input-group stylish-input-group" >
+            <div class="input-group stylish-input-group">
                 <input class="form-control pull-right" type="search" id="search"
                        name="search" placeholder="Search by any field..." />
-                <span id="search-button-area" class="input-group-addon">
-                    <button id="search-button" type="submit" value="search">
+                <span id="search-button-area" class="input-group-addon search-button">
+                    <button class="search-button" type="submit" value="search">
                         <!-- This bug took me two hours to figure out... using i instead
                         of span works as the HTML tag -->
                         <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
@@ -42,23 +43,69 @@
     <!-- After many hours, the EnumHelper class creates a select list out of an enum type,
     which will implicitly retrieve the display name attribute value.
     https://aspnetwebstack.codeplex.com/SourceControl/latest#src/System.Web.Mvc/Html/EnumHelper.cs -->
-    
-        @Html.DropDownList("orderResult",
-                           EnumHelper.GetSelectList(typeof(RestOrderEnum)),
-                           "Order Restaurants By",
-                           new { @class = "form-control dropdown",
-                                 style = "margin-top:-3%; margin-bottom:2%; margin-left:1.5%",
-                                 @onchange = "onOrderingSelected(this)" })
-    
+
+    @Html.DropDownList("orderResult",
+                                        EnumHelper.GetSelectList(typeof(RestOrderEnum)),
+                                        "Order Restaurants By",
+                                        new
+                                        {
+                                            @class = "form-control dropdown",
+                                            style = "margin-top:-3%; margin-bottom:2%; margin-left:1.5%",
+                                            @onchange = "onOrderingSelected(this)"
+                                        })
+
 </div>
 
 <div class="row">
+    @{ int indexer = 1;}
     @foreach (var item in Model)
     {
+
         <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="panel panel-primary cardlike" style="height: 54ex; max-height:54ex;">
                 <div class="panel-body">
-                    <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+                    <div style="font-size:2ex; height:10%;">
+                        <div style="float:left;">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </div>
+                        <!-- For the button. -->
+                        <div class="search-button">
+                            <button id="music-commands-button" class="search-button" @Html.Raw("data-dialog" + indexer + "=somedialog" + indexer + " ") class="trigger button is-primary">
+                                <i class="glyphicon glyphicon-map-marker search-button " style="font-size:1.5ex;" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+
+                        <!-- The pop up window. -->
+                        <div @Html.Raw("id" + "=somedialog" + indexer + " ") class="dialog dialog--close" style="z-index:100;">
+                            <div class="dialog__overlay"></div>
+
+                            <div class="dialog__content">
+
+                                <div class="morph-shape">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 280" preserveAspectRatio="none">
+                                        <rect x="3" y="3" fill="none" width="556" height="276"></rect>
+                                    </svg>
+                                </div>
+                                <!--- For the text or embed inside of the pop-up box. -->
+                                <div class="dialog-inner">
+                                    <h2 style="font-size: 1.0em;">
+
+                                        <iframe frameborder="0" style="border:0; width:50vw; height: 50vh;"
+                                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAjq8IyD9cSmWf1o-Dp21JAWU_Jk6Rbu-s&q=@Html.Raw(Model.ElementAt(indexer - 1).RestaurantAddress.Street.Replace(" ", "%20"))" allowfullscreen></iframe>
+                                    </h2>
+                                    <div><button class="action" data-dialog-close="a">Close</button></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- The map button. -->
+
+
+
+
                     <hr />
                     <h5 style="height:5ex; vertical-align:middle;">
                         <strong>@Html.DisplayName("Address")</strong> : @Html.DisplayFor(modelItem => item.RestaurantAddress.Street)
@@ -78,21 +125,23 @@
                         <strong>@Html.DisplayName("Average Rating: ")</strong> : @Html.DisplayFor(modelItem => item.AvgRating)
                     </h5>
                     <hr />
-                
-                    @if (User.IsInRole("Admin"))
-                    {
-                        @Html.ActionLink("Edit |", "Edit", new { id = item.RestaurantId });
-                        @Html.ActionLink(" Details |", "Details", new { id = item.RestaurantId });
-                        @Html.ActionLink(" Delete |", "Delete", new { id = item.RestaurantId });
-                        @Html.ActionLink(" Reviews", "ReviewsRedir", new { id = item.RestaurantId });
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Reviews", "ReviewsRedir", new { id = item.RestaurantId });
-                    }
-                
-                    
 
+                    @if (User.IsInRole("Admin"))
+    {
+                @Html.ActionLink("Edit |", "Edit", new { id = item.RestaurantId });
+                @Html.ActionLink(" Details |", "Details", new { id = item.RestaurantId });
+                @Html.ActionLink(" Delete |", "Delete", new { id = item.RestaurantId });
+                @Html.ActionLink(" Reviews", "ReviewsRedir", new { id = item.RestaurantId });
+}
+else
+{
+                @Html.ActionLink("Details |", "Details", new { id = item.RestaurantId })
+                @Html.ActionLink(" Reviews", "ReviewsRedir", new { id = item.RestaurantId });
+}
+
+
+                    @{indexer++;
+                    }
                 </div>
             </div>
         </div>
@@ -100,12 +149,186 @@
 
 </div>
 <script>
-// Need to get the DOM obj and its options array, whcih
-// we can access the text option from that list, to pass
-// to the action.
-function onOrderingSelected(obj)
-{  
-    var text = obj.options[obj.selectedIndex].text;
-    window.location.href = "/Restaurants/OrderBy?orderResult=" + text;
-}
+    // Need to get the DOM obj and its options array, whcih
+    // we can access the text option from that list, to pass
+    // to the action.
+    function onOrderingSelected(obj) {
+        var text = obj.options[obj.selectedIndex].text;
+        window.location.href = "/Restaurants/OrderBy?orderResult=" + text;
+    }
 </script>
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="~/Content/DialogBox.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js">
+<link href="https://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet">
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://tympanus.net/Development/DialogEffects/js/modernizr.custom.js"></script>
+<script type="text/javascript" src="https://tympanus.net/Development/DialogEffects/js/classie.js"></script>
+<script type="text/javascript">
+    /**
+ * dialog box v0.1
+ * Ashwin Saxena
+ */
+    ; (function (window) {
+
+        'use strict';
+
+        var support = { animations: Modernizr.cssanimations },
+            animEndEventNames = { 'WebkitAnimation': 'webkitAnimationEnd', 'OAnimation': 'oAnimationEnd', 'msAnimation': 'MSAnimationEnd', 'animation': 'animationend' },
+            animEndEventName = animEndEventNames[Modernizr.prefixed('animation')],
+            onEndAnimation = function (el, callback) {
+                var onEndCallbackFn = function (ev) {
+                    if (support.animations) {
+                        if (ev.target != this) return;
+                        this.removeEventListener(animEndEventName, onEndCallbackFn);
+                    }
+                    if (callback && typeof callback === 'function') { callback.call(); }
+                };
+                if (support.animations) {
+                    el.addEventListener(animEndEventName, onEndCallbackFn);
+                }
+                else {
+                    onEndCallbackFn();
+                }
+            };
+
+        function extend(a, b) {
+            for (var key in b) {
+                if (b.hasOwnProperty(key)) {
+                    a[key] = b[key];
+                }
+            }
+            return a;
+        }
+
+        function DialogFx(el, options) {
+            this.el = el;
+            this.options = extend({}, this.options);
+            extend(this.options, options);
+            this.ctrlClose = this.el.querySelector('[data-dialog-close]');
+            this.isOpen = false;
+            this._initEvents();
+        }
+
+        DialogFx.prototype.options = {
+            // callbacks
+            onOpenDialog: function () { return false; },
+            onCloseDialog: function () { return false; }
+        }
+
+        DialogFx.prototype._initEvents = function () {
+            var self = this;
+
+            // close action
+            this.ctrlClose.addEventListener('click', this.toggle.bind(this));
+
+            // esc key closes dialog
+            document.addEventListener('keydown', function (ev) {
+                var keyCode = ev.keyCode || ev.which;
+                if (keyCode === 27 && self.isOpen) {
+                    self.toggle();
+                }
+            });
+
+            this.el.querySelector('.dialog__overlay').addEventListener('click', this.toggle.bind(this));
+        }
+
+        DialogFx.prototype.toggle = function () {
+            var self = this;
+            if (this.isOpen) {
+                classie.remove(this.el, 'dialog--open');
+                classie.add(self.el, 'dialog--close');
+
+                onEndAnimation(this.el.querySelector('.dialog__content'), function () {
+                    classie.remove(self.el, 'dialog--close');
+                });
+
+                // callback on close
+                this.options.onCloseDialog(this);
+            }
+            else {
+                classie.add(this.el, 'dialog--open');
+
+                // callback on open
+                this.options.onOpenDialog(this);
+            }
+            this.isOpen = !this.isOpen;
+        };
+
+        // add to global namespace
+        window.DialogFx = DialogFx;
+
+    })(window);
+
+    /* call */
+    window.onload = function () {
+        @for (var index = 1; index <= Model.Count(); index++)
+        {
+            <text>
+            var @Html.Raw("dlgtrigger" + index) = document.querySelector(@Html.Raw("'[data-dialog" + index + "]')"),
+            @Html.Raw("somedialog" + index) = document.getElementById(@Html.Raw("dlgtrigger" + index + ".getAttribute(" + @Html.Raw("'data-dialog" + index + "')"))),
+            @Html.Raw("dlg" + index) = new DialogFx(@Html.Raw("somedialog" + index));
+
+            @Html.Raw("dlgtrigger" + index + ".addEventListener('click', " + @Html.Raw("dlg" + index) + ".toggle.bind(" + @Html.Raw("dlg" + index) + "))");
+            </text>
+        }
+
+    };
+</script>
+
+<!--        var dlgtrigger2 = document.querySelector('[data-dialog2]'),
+            somedialog2 = document.getElementById(dlgtrigger2.getAttribute('data-dialog2')),
+            dlg2 = new DialogFx(somedialog2);
+
+        dlgtrigger2.addEventListener('click', dlg2.toggle.bind(dlg2));
+
+        var dlgtrigger3 = document.querySelector('[data-dialog3]'),
+            somedialog3 = document.getElementById(dlgtrigger3.getAttribute('data-dialog3')),
+            dlg3 = new DialogFx(somedialog3);
+
+        dlgtrigger3.addEventListener('click', dlg3.toggle.bind(dlg3));-->
+<!--     <div id="somedialog2" class="dialog dialog--close">
+                    <div class="dialog__overlay"></div>
+                    <div class="dialog__content">
+                        <div class="morph-shape">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 280" preserveAspectRatio="none">
+                                <rect x="3" y="3" fill="none" width="556" height="276"></rect>
+                            </svg>
+                        </div>
+                        <div class="dialog-inner">
+              <strong>Basic commands:</strong> </br>
+                            ◉;info [name]: Returns your join date to the server. If you have left/been kicked
+                the join date will be the day you rejoined.</br>
+              ◉;uniqueusers [date]: Gives an excel file with the unique user name, time stamp, and message. </br>
+              ◉;search [search]: Returns the first three search results from a google search query.</br>
+              ◉;ping: Returns the latency of the bot.</br>
+              ◉;youtube [search]: Returns the first three search results from Youtube.</br> </br>
+
+                            <div><button class="action" data-dialog-close="a">Close</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                          <div  class="col-sm-4">
+    <div class="col-padding">
+      <h3>Analysis Commands</h3>
+      <p class="sub-section-text">
+        Use an assortment of analysis utilities, such as searching on YouTube and Google.</br></p>
+
+        <center><span style="font-size: 16px ; color: #000000; font-style: italic; ">;search [query]</span></center>
+        <center><span style="font-size: 16px ; color: #000000; font-style: italic;">;youtube [query]</span></center></br>
+        <p class="sub-section-text">For more information, click on the button below.
+      </p>
+      <div class="button-wrap">
+        <button id="analysis-commands-button" data-dialog2="somedialog2" class="trigger button is-success">
+          <p class="commands-button-text">Analysis Commands</p>
+        </button>
+      </div>
+    </div>
+  </div>
+-->

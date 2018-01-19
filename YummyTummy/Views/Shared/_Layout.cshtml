@@ -16,8 +16,8 @@
 
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 </head>
-<body>
-    @RenderSection("testSection", required: false);
+<body style="margin-left: 10%;margin-right: 10%;">
+    @RenderSection("testSection", required: false)
     <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:cadetblue">
         <div class="container" style="color:white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
             <div class="navbar-header">
@@ -34,7 +34,8 @@
                     <li>@Html.ActionLink("Restaurants", "Index", "Restaurants")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                   
+                    <!--<li>@Html.ActionLink("Role", "Index", "Role")</li>-->
+
 
                 </ul>
                 @Html.Partial("_LoginPartial")

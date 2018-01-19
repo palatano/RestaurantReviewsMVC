@@ -16,7 +16,18 @@ namespace YummyTummy.Controllers
 {
     public class RestaurantsController : Controller
     {
+        IYummyTummy testDb;
         private RestaurantDbContext db = new RestaurantDbContext();
+
+        public RestaurantsController(IYummyTummy testDb)
+        {
+            this.testDb = testDb;
+        }
+
+        public RestaurantsController()
+        {
+
+        }
 
         // GET: Restaurants
         public ActionResult Index()
@@ -24,6 +35,17 @@ namespace YummyTummy.Controllers
             var restaurants = db.Restaurants.Include(r => r.RestaurantAddress).Include(r => r.Review);
             return View(restaurants.Include("RestaurantAddress").Include("Review").ToList());
         }
+
+        public int TestAction([Bind(Include = "RestaurantId,Name, RestaurantAddress")] Restaurant restaurant)
+        {
+            if (ModelState.IsValid)
+            {
+                testDb.Add<Restaurant>(restaurant);
+                return db.SaveChanges();
+            }
+            return 0;
+        }
+
 
         // GET: Restaurants/OrderBy
         [ActionName("OrderBy")]
@@ -52,7 +74,7 @@ namespace YummyTummy.Controllers
             {
                 return View("Index", restaurants);
             }
-            return View("Index", resultSet);
+            return View("Index", resultSet.ToList());
         }
 
         // POST: Restaurants

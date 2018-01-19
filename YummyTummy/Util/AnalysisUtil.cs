@@ -17,7 +17,7 @@ namespace YummyTummy.Util
         public static IEnumerable<Restaurant> TopThreeRatedRestaurants(RestaurantDbContext db)
         {
                 // We need a comparer to track the ratings, as well as the size.
-                SortedSet<Restaurant> avgRatingSet = new SortedSet<Restaurant>();
+                List<Restaurant> avgRatingSet = new List<Restaurant>();
                 int size = 0;
                 var restaurants = db.Restaurants.Include("RestaurantAddress").Include("Review");
                 foreach (var rest in restaurants)

@@ -6,14 +6,20 @@
 <div class="container body-content">
     <div class="image-container">
         <div id="home-images">
-            <img class="home-img-size" src="~/fonts/rest_1.jpg" />
-            <img class="home-img-size" src="~/fonts/rest_2.jpg" />
-            <img class="home-img-size" src="~/fonts/rest_3.jpg" />
-            <img class="home-img-size" src="~/fonts/rest_4.jpg" />
+            <img class="home-img-size" src="/fonts/rest_1.jpg" />
+            <img class="home-img-size" src="/fonts/rest_2.jpg" />
+            <img class="home-img-size" src="/fonts/rest_3.jpg" />
+            <img class="home-img-size" src="/fonts/rest_4.jpg" />
         </div>
         <div id="home-title-sect">
             Welcome to Restauranteview!
         </div>
+        <div id="sliding-ad">
+            <a>
+                <img alt="Bad Link fam" src="http://www.splotchy.com/images/blog/hatehim.png" />
+            </a>
+        </div>
+
     </div>
 
 
@@ -29,6 +35,7 @@
         <strong style="font-size:medium">Click on the Restaurants Tab to start looking, or create an account above!</strong>
     </div>
     <hr />
+
 
     <h2 id="top-rest-text">Top 3 Restaurants </h2>
     <i>See what the community is into: </i>
@@ -52,4 +59,17 @@
         }
     </div>
 
-    </div>
+</div>
+
+<script type="text/javaScript" src="~/Scripts/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        setTimeout($("#sliding-ad").animate({ left: '83.5%' }, 'slow'), 2000);
+    });
+    $("#sliding-ad").click(function () {
+        $("#sliding-ad").fadeOut()
+    });
+
+</script>
