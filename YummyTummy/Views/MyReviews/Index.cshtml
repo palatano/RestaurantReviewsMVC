@@ -19,15 +19,15 @@
 
                     <hr />
                     <h5>
-                        <strong>@Html.DisplayName("Rating")</strong> : @Html.DisplayFor(modelItem => item.RestaurantReview.Rating)
+                        <strong>@Html.DisplayName("Rating")</strong> @Html.DisplayFor(modelItem => item.RestaurantReview.Rating)
                     </h5>
                     <hr />
                     <h5>
-                        <strong>@Html.DisplayName("Comment")</strong> : @Html.DisplayFor(modelItem => item.RestaurantReview.Comment)
+                        <strong>@Html.DisplayName("Comment")</strong> @Html.DisplayFor(modelItem => item.RestaurantReview.Comment)
                     </h5>
                     <hr />
                     <h5>
-                        <strong>@Html.DisplayName("Date of Review")</strong> : @Html.DisplayFor(modelItem => item.RestaurantReview.DateRated)
+                        <strong>@Html.DisplayName("Date of Review")</strong> @Html.DisplayFor(modelItem => item.RestaurantReview.DateRated)
                     </h5>
                     <hr />
                     @Html.ActionLink("Edit", "Edit", new { id = item.RestaurantReview.Id }) |

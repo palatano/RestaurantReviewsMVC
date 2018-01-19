@@ -69,10 +69,17 @@
                             @Html.DisplayFor(modelItem => item.Name)
                         </div>
                         <!-- For the button. -->
-                        <div class="search-button">
+                        <div class="search-button"  >
                             <button id="music-commands-button" class="search-button" @Html.Raw("data-dialog" + indexer + "=somedialog" + indexer + " ") class="trigger button is-primary">
                                 <i class="glyphicon glyphicon-map-marker search-button " style="font-size:1.5ex;" aria-hidden="true"></i>
                             </button>
+                           
+                                <a class="search-button" style="    height: 10%;
+    width: 10%; color:black;" href=@Html.Raw("\"" + "https://www.google.com/search?q=" + Model.ElementAt(indexer - 1).Name.Replace(" ", "%20") + "\"") id="music-commands-button" class="search-button" @Html.Raw("data-dialog" + indexer + "=somedialog" + indexer + " ") class="trigger button is-primary">
+
+                                    <i class="glyphicon glyphicon-search search-button " style="font-size:1.5ex;" aria-hidden="true"></i>
+                                </a>
+                           
                         </div>
 
 
@@ -92,7 +99,7 @@
                                     <h2 style="font-size: 1.0em;">
 
                                         <iframe frameborder="0" style="border:0; width:50vw; height: 50vh;"
-                                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAjq8IyD9cSmWf1o-Dp21JAWU_Jk6Rbu-s&q=@Html.Raw(Model.ElementAt(indexer - 1).RestaurantAddress.Street.Replace(" ", "%20"))" allowfullscreen></iframe>
+                                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAjq8IyD9cSmWf1o-Dp21JAWU_Jk6Rbu-s&q=@Html.Raw(Model.ElementAt(indexer - 1).RestaurantAddress.AddressString.Replace(" ", "%20"))" allowfullscreen></iframe>
                                     </h2>
                                     <div><button class="action" data-dialog-close="a">Close</button></div>
                                 </div>
@@ -108,21 +115,21 @@
 
                     <hr />
                     <h5 style="height:5ex; vertical-align:middle;">
-                        <strong>@Html.DisplayName("Address")</strong> : @Html.DisplayFor(modelItem => item.RestaurantAddress.Street)
+                        <strong>@Html.DisplayName("Address:")</strong> @Html.DisplayFor(modelItem => item.RestaurantAddress.Street)
                         <br />&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;
                         @Html.DisplayFor(modelItem => item.RestaurantAddress.AddressWOStreet)
                     </h5>
                     <hr />
                     <h5>
-                        <strong>@Html.DisplayName("Email")</strong> : @Html.DisplayFor(modelItem => item.RestaurantAddress.Email)
+                        <strong>@Html.DisplayName("Email:")</strong> @Html.DisplayFor(modelItem => item.RestaurantAddress.Email)
                     </h5>
                     <hr />
                     <h5>
-                        <strong>@Html.DisplayName("Phone")</strong> : @Html.DisplayFor(modelItem => item.RestaurantAddress.Phone)
+                        <strong>@Html.DisplayName("Phone:")</strong> @Html.DisplayFor(modelItem => item.RestaurantAddress.Phone)
                     </h5>
                     <hr />
                     <h5>
-                        <strong>@Html.DisplayName("Average Rating: ")</strong> : @Html.DisplayFor(modelItem => item.AvgRating)
+                        <strong>@Html.DisplayName("Average Rating: ")</strong> @Html.DisplayFor(modelItem => item.AvgRating) @Html.Raw(" (" + (item.Review.Count == 1 ? 1 + " review)" : item.Review.Count + " reviews)"))
                     </h5>
                     <hr />
 

@@ -39,5 +39,14 @@ namespace YummyTummy.Models
                 return String.Format("{0}, {1} {2}, {3}",  City, State, ZipCode, Country);
             }
         }
+
+        [NotMapped]
+        public string AddressString
+        {
+            get
+            {
+                return String.Format("{0}, {1}, {2} {3}, {4}", Street, City, State, ZipCode, Country);
+            }
+        }
     }
 }

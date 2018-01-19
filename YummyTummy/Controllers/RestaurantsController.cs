@@ -130,6 +130,7 @@ namespace YummyTummy.Controllers
         }
 
         // GET: RestaurantsReview
+        
         public ActionResult ReviewsRedir(int id)
         {
             return RedirectToAction("Index", "RestaurantReviews", new {restId = id});
@@ -139,6 +140,7 @@ namespace YummyTummy.Controllers
 
         // GET: Restaurants/Details/5
         [Log] // custom filter.
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -157,6 +159,7 @@ namespace YummyTummy.Controllers
         }
 
         // GET: Restaurants/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.RestaurantId = new SelectList(db.Addresses, "Id", "Street");
@@ -168,6 +171,7 @@ namespace YummyTummy.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "RestaurantId,Name, RestaurantAddress")] Restaurant restaurant)
         {
             
@@ -184,6 +188,7 @@ namespace YummyTummy.Controllers
         }
 
         // GET: Restaurants/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -207,6 +212,7 @@ namespace YummyTummy.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "RestaurantId,Name, RestaurantAddress")] Restaurant restaurant)
         {
             if (ModelState.IsValid)
@@ -222,6 +228,7 @@ namespace YummyTummy.Controllers
         }
 
         // GET: Restaurants/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -242,6 +249,7 @@ namespace YummyTummy.Controllers
         // POST: Restaurants/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Restaurant restaurant = db.Restaurants.Find(id);
